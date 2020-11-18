@@ -25,7 +25,7 @@ class Volusion {
 	}
 
 	public function getOrderById($orderId) {
-		$file = $this->apiUrl . "net/WebService.aspx?Login=" . $this->apiLogin . "&EncryptedPassword=" . $this->apiPassword . "&EDI_Name=Generic\Orders&SELECT_Columns=*&WHERE_Column=OrderID&WHERE_Value=" . $orderId;
+		$file = $this->apiUrl . "net/WebService.aspx?Login=" . $this->apiLogin . "&EncryptedPassword=" . $this->apiPassword . "&EDI_Name=Generic\Orders&SELECT_Columns=*&WHERE_Column=o.OrderID&WHERE_Value=" . $orderId;
 
 		$xml = simplexml_load_file($file,"SimpleXMLElement",LIBXML_NOCDATA);
 		return $xml;
