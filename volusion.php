@@ -1,16 +1,16 @@
 <?php
 class Volusion {
 	
-	public $apiUrl = "";
-	public $apiLogin = "";
-	public $apiPassword = "";
-	public $ediName = "";
+	private $apiUrl = "";
+	private $apiLogin = "";
+	private $apiPassword = "";
+	// public $ediName = "";
 
-	function __construct( $apiUrl, $apiLogin, $apiPassword, $ediName ) {
+	function __construct( $apiUrl, $apiLogin, $apiPassword ) {
 		$this->apiUrl = $apiUrl;
 		$this->apiLogin = $apiLogin;
 		$this->apiPassword = $apiPassword;
-		$this->ediName = $ediName;
+		// $this->ediName = $ediName;
 	}
 
 	public function index() {
@@ -18,8 +18,14 @@ class Volusion {
 	}
 
 	public function getOrders() {
-
 		$file = $this->apiUrl . 'net/WebService.aspx?Login=' . $this->apiLogin . '&EncryptedPassword=' . $this->apiPassword . '&EDI_Name=Generic\Orders&SELECT_Columns=*';
+
+		$xml = simplexml_load_file($file,"SimpleXMLElement",LIBXML_NOCDATA);
+		return $xml;
+	}
+
+	public function getOrderById($orderId) {
+		$file = $this->apiUrl . "net/WebService.aspx?Login=" . $this->apiLogin . "&EncryptedPassword=" . $this->apiPassword . "&EDI_Name=Generic\Orders&SELECT_Columns=*&WHERE_Column=OrderID&WHERE_Value=" . $orderId;
 
 		$xml = simplexml_load_file($file,"SimpleXMLElement",LIBXML_NOCDATA);
 		return $xml;
